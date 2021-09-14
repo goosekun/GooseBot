@@ -25,11 +25,20 @@ async def roll(ctx, number_of_dice: int, number_of_sides: int):
     ]
     await ctx.send('Quack! ' + ', '.join(dice))
 
-
 @bot.event
 async def on_member_join(member):
     channel = discord.utils.get(member.guild.text_channels, name="welcome")
-    await channel.send(f"Quack! Quack! {member.mention} has made it! Give them a warm, cozy hug <3 :')")
+    quotes = [
+        f"Quack! Quack! {member.mention} has made it! Give them a warm, cozy hug <3 :')",
+        f"QUACK! {member.mention}... I hope you brought some popcorn to share... ;)",
+        f"{member.mention}! Welcome to the gang. We should hang out sometime! Quack! :)",
+        f"Lookin' good {member.mention}. Lookin' good. Quack! <3",
+        f"Hi, {member.mention}! When are we going to play Chivalry 2? Quack! :)",
+        f"{member.mention} in da building! How's the weather lookin' like there? Quack! :D"
+    ]
+
+    response = random.choice(quotes)
+    await channel.send(response)
 
 @bot.command(name='quack')
 async def quack(ctx):
@@ -38,8 +47,19 @@ async def quack(ctx):
 
 @bot.event
 async def on_message(message):
-    if message.content ==  "Quack!":
-        await message.channel.send("Quackity! Quackity! Quack! Quack! <3")
+    if message.author.bot:
+        return
+
+    if "Quack!" in message.content:
+        quotes = [
+            "Quackity! Quackity! Quack! Quack! <3",
+            "Hehe. Quack!",
+            "*Goose Bot dances*",
+            "Did I hear a quack? QUACK!!!!"
+        ]
+
+        response = random.choice(quotes)
+        await message.channel.send(response)
 
     await bot.process_commands(message)
 
