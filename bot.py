@@ -51,4 +51,8 @@ async def on_error(event, *args, **kwargs):
         else:
             raise
 
+@bot.event
+async def on_member_remove(member):
+    await member.channel.send("Someone has left the clan... Quack.. :'(")
+
 bot.run(TOKEN)
