@@ -1,6 +1,6 @@
 import os
 import discord
-
+import random
 from dotenv import load_dotenv
 from discord.ext import commands
 
@@ -14,6 +14,15 @@ bot = commands.Bot(command_prefix='!')
 async def on_ready():
     print("Bot is ready and online!")
 
+@bot.command(name='roll_dice', help='Simulates rolling dice.')
+async def roll(ctx, number_of_dice: int, number_of_sides: int):
+    dice = [
+        str(random.choice(range(1, number_of_sides + 1)))
+        for _ in range(number_of_dice)
+    ]
+    await ctx.send('Quack! ' + ', '.join(dice))
+
+
 @bot.event
 async def on_member_join(member):
     channel = discord.utils.get(member.guild.text_channels, name="welcome")
@@ -26,12 +35,10 @@ async def quack(ctx):
 
 @bot.event
 async def on_message(message):
-    if message.author == bot.user:
-        return
+    if message.content ==  "Quack!":
+        await message.channel.send("Quackity! Quackity! Quack! Quack! <3")
 
-    if message.content == "Quack!":
-        await message.channel.send("Quack! Quack! <33")
-
+    await bot.process_commands(message)
 
 @bot.event
 async def on_error(event, *args, **kwargs):
