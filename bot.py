@@ -3,6 +3,7 @@ import discord
 import random
 from dotenv import load_dotenv
 from discord.ext import commands
+from keepalive import keep_alive
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -73,6 +74,7 @@ async def on_error(event, *args, **kwargs):
 
 @bot.event
 async def on_member_remove(member):
-    await member.channel.send("Someone has left the clan... Quack.. :'(")
+    await bot.channel.send("Someone has left the clan... Quack.. :'(")
 
+keep_alive() #pings server
 bot.run(TOKEN)
